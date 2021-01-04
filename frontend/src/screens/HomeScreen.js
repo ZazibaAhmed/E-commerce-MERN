@@ -6,10 +6,10 @@ import {Row,Col} from 'react-bootstrap'
 import Product from '../components/Product'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-
+ 
 const HomeScreen = () => {
     // const [products, setProducts] = useState([]);  //OLD WAY
-
+     
     const dispatch = useDispatch();
 
     // Name it, what you named it in store
@@ -18,17 +18,18 @@ const HomeScreen = () => {
     //Destructuring parts of the state that could be sent down from reducer
     const { loading, error, products } = productList
 
-
+    // We make requests when the app has loaded
     useEffect(() => {
         //Calls listProducts and fills up our space
         dispatch(listProducts())
-
-        // const fetchProducts = async () => {        //OLD WAY
+        
+        //----------OLD WAY--------------
+        // const fetchProducts = async () => {       
         //     const response = await axios.get('/api/products')
         //     setProducts(response.data) 
         // }
         //fetchProducts();
-    }, [dispatch])
+    }, [dispatch]) //passing dispatch as a dependency since we are using it, otherwise we'll get a warning
 
     return (
         <>

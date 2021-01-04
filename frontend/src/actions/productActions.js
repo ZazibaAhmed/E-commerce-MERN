@@ -9,16 +9,25 @@ import {
 import axios from 'axios'
 
 //These functions can be considered action creators
-//Disptach to dispatch the actions
+//Disptach the actions to reducers
+//Previously we were fetcing directly from components, now we make requests in actions
+
+
+//This is wehere Redux THUNK comes in. Allows us to add a function within a function
 export const listProducts = () => async (dispatch) => {
     try{
         //Will call the reducer in the reducer file
+        //This calls the reducer which sets loeading to true
         dispatch({ type: PRODUCT_LIST_REQUEST })
 
         //Make our request
         const response = await axios.get('/api/products')
+
+        //^ If this fails it will fire off in the catch block 
+        // otherwise it will go down to dispatch 
         
         //After we get our successful response
+        //Sending the response data as payload
         dispatch({ 
             type: PRODUCT_LIST_SUCCESS,
             payload: response.data 
@@ -29,10 +38,10 @@ export const listProducts = () => async (dispatch) => {
         //When something goes wrong
         //We are getting out backend errors in front end states
         dispatch({ 
-            type: PRODUCT_LIST_FAIL,
+            type: PRODUCT_LIST_FAIL,                   
             payload:  error.response && error.response.data.message 
-            ? error.response.data.message
-            : error.message
+            ? error.response.data.message //custom message
+            : error.message //generic message 
         })
     }
 
