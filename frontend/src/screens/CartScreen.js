@@ -25,9 +25,6 @@ const CartScreen = ({match, location, history }) => {
         if(productId){
             dispatch( addToCart(productId, qty) )
         }
-        else{
-
-        }
     }, [dispatch, productId, qty])
 
     const removeFromCartHandler= (id) => {
@@ -37,7 +34,7 @@ const CartScreen = ({match, location, history }) => {
     const checkoutHandler= (id) => {
         //We'll redirect to login unless it has a query string of redirect set to shipping
         history.push('/login?redirect=shipping')
-        console.log('ccove')
+        console.log('checkout')
     }
 
     return (

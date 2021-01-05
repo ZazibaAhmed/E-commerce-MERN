@@ -2,15 +2,20 @@ import express from 'express'
 import dotenv from 'dotenv'
 import colors from 'colors'
 import connectDB from './config/db.js'
+import { notFound, errorHandler} from './middleware/errorMiddleware.js' 
 
 import productRoutes from './routes/productRoutes.js'
-import { notFound, errorHandler} from './middleware/errorMiddleware.js' 
+import userRoutes from './routes/userRoutes.js'
+
 
 dotenv.config() 
 
 connectDB()
 
 const app = express()
+
+//Will allow us to accept JSON data in the body
+app.use(express.json())
 
 // app.use( (req, res, next) => {
 //     console.log("Original URL: "+req.originalUrl);
@@ -23,6 +28,7 @@ app.get('/', (req, res) => {
 
 // Anything that goes to the link wil be linked to this route
 app.use('/api/products', productRoutes)
+app.use('/api/users', userRoutes)
 
 // Handling error
 app.use(notFound)
