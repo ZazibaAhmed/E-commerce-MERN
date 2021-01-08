@@ -95,9 +95,9 @@ const updateUserprofile = asyncHandler( async (req, res) => {
     const user = await User.findById(req.user._id)
 
     if(user){
-        user.name = req.body.name || user.name
+        user.name = req.body.name || user.name //in case name in req body is empty
         user.email = req.body.email || user.email
-        // using the middleware in the Model, passowrd is encrypted before being saved
+        // Using the middleware in the Model, passowrd is encrypted before being saved
         if(req.body.password){
             user.password = req.body.password
         }

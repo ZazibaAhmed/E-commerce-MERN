@@ -4,6 +4,7 @@ import { Form, Row, Col, Button} from 'react-bootstrap'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { getUserDetails, updateUserProfile, } from '../actions/userActions'
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
 const ProfileScreen = ({ location, history }) => {
     const [name, setName] = useState('')
@@ -28,7 +29,8 @@ const ProfileScreen = ({ location, history }) => {
           history.push('/')
         }
         else{
-            if(!user.name){
+            if(!user || !user.name || success){
+                dispatch({ type: USER_UPDATE_PROFILE_RESET})
                 dispatch(getUserDetails('profile'))
             }
             else{
@@ -36,7 +38,7 @@ const ProfileScreen = ({ location, history }) => {
                 setEmail(user.email)
             }
         }
-    }, [dispatch, history, userInfo, user])
+    }, [dispatch, history, userInfo, user, success])
 
     const submitHandler = (e) => {
         //It's a form,so we prevent so that the page doesnt refresh

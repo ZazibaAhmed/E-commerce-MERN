@@ -27,7 +27,7 @@
                     <Nav className="ml-auto">
                         <LinkContainer to="/cart">
                             <Nav.Link>
-                                <i className="fas fa-shopping-cart"></i>Cart
+                                <i className="fas fa-shopping-cart mr-1"></i>Cart
                             </Nav.Link>
                         </LinkContainer>
                         {userInfo ? (
@@ -43,7 +43,7 @@
                         :  (
                             <LinkContainer to="/login">
                                 <Nav.Link>
-                                    <i className="fas fa-user"></i>Sign In
+                                    <i className="fas fa-user mr-1"></i>Sign In
                                 </Nav.Link>
                             </LinkContainer>
                         )
