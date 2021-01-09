@@ -9,6 +9,7 @@ import {
     userDetailsReducer, 
     userUpdateProfileReducer 
 } from './reducers/userReducers'
+import { orderCreateReducer } from './reducers/orderReducers'
 
 // productList, productDetails, cart are gonna show as our states
 const reducer = combineReducers({
@@ -18,7 +19,8 @@ const reducer = combineReducers({
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
     userDetails: userDetailsReducer,
-    userUpdateProfile: userUpdateProfileReducer
+    userUpdateProfile: userUpdateProfileReducer,
+    orderCreate: orderCreateReducer,
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
@@ -29,8 +31,17 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
 ? JSON.parse(localStorage.getItem('userInfo'))
 : null
 
+//When our store initializes, if there's sth in local storage for shipping address,
+// we want to add that to state
+const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
+? JSON.parse(localStorage.getItem('shippingAddress'))
+: {}
+
 const initialState = {
-    cart: { cartItems: cartItemsFromStorage },
+    cart: { 
+        cartItems: cartItemsFromStorage, 
+        shippingAddress: shippingAddressFromStorage 
+    },
     userLogin: { userInfo: userInfoFromStorage },
 }
 

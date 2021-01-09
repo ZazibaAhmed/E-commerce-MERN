@@ -19,6 +19,7 @@ const protect = asyncHandler(async (req, res, next) => {
         
         //We'll fetch the user 
         //Setting req.user
+        //We are creating req.user here
                           //Select everything but password
         req.user = await User.findById(decoded.id).select('-password')
   
