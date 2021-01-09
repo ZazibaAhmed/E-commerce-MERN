@@ -9,7 +9,7 @@ import {
     userDetailsReducer, 
     userUpdateProfileReducer 
 } from './reducers/userReducers'
-import { orderCreateReducer } from './reducers/orderReducers'
+import { orderCreateReducer, orderDetailsReducer } from './reducers/orderReducers'
 
 // productList, productDetails, cart are gonna show as our states
 const reducer = combineReducers({
@@ -21,6 +21,7 @@ const reducer = combineReducers({
     userDetails: userDetailsReducer,
     userUpdateProfile: userUpdateProfileReducer,
     orderCreate: orderCreateReducer,
+    orderDetails: orderDetailsReducer
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
