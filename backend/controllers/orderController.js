@@ -44,7 +44,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
 // @route   GET /api/orders/:id
 // @access  Private
 const getOrderById = asyncHandler(async (req, res) => {
-                            //We get the id from the URL
+                              //We get the id from the URL
   const order = await Order.findById(req.params.id).populate(
     'user', //want to populate from user
     'name email' //space seperated fields we want
@@ -67,13 +67,15 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
   if (order) {
     order.isPaid = true
     order.paidAt = Date.now()
-    order.paymentResult = {
+    //order.paymentResult comes from PayPal
+    order.paymentResult = {  //You might have to add other stuff if you hve other gateways
       id: req.body.id,
       status: req.body.status,
       update_time: req.body.update_time,
       email_address: req.body.payer.email_address,
     }
-
+    
+    //We just set the stuff, we have to update/save it
     const updatedOrder = await order.save()
 
     res.json(updatedOrder)
