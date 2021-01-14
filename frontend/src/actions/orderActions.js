@@ -6,6 +6,9 @@ import {
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
+  ORDER_PAY_REQUEST,
+  ORDER_PAY_SUCCESS,
+  ORDER_PAY_FAIL,
 } from '../constants/orderConstants'
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -90,11 +93,11 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     })
   }
 }
-
-export const payOrder = (id) => async (dispatch, getState) => {
+                                //payment result comes from Paypal
+export const payOrder = (orderId, paymentResult) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: ORDER_DETAILS_REQUEST,
+      type: ORDER_PAY_REQUEST,
     })
 
     const {
@@ -103,14 +106,16 @@ export const payOrder = (id) => async (dispatch, getState) => {
 
     const config = {
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     }
-
-    const { data } = await axios.get(`/api/orders/${id}`, config)
+    
+    //we dont pass the order, cause the order's already there  
+    const { data } = await axios.put(`/api/orders/${orderId}/pay`,paymentResult, config)
 
     dispatch({
-      type: ORDER_DETAILS_SUCCESS,
+      type: ORDER_PAY_SUCCESS,
       payload: data,
     })
 
@@ -123,7 +128,7 @@ export const payOrder = (id) => async (dispatch, getState) => {
     //   dispatch(logout())
     // }
     dispatch({
-      type: ORDER_DETAILS_FAIL,
+      type: ORDER_PAY_FAIL,
       payload: message,
     })
   }
