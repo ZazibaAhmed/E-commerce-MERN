@@ -7,12 +7,13 @@ import {
     userLoginReducer, 
     userRegisterReducer, 
     userDetailsReducer, 
-    userUpdateProfileReducer 
+    userUpdateProfileReducer,
 } from './reducers/userReducers'
 import { 
     orderCreateReducer, 
     orderDetailsReducer,
     orderPayReducer,
+    orderListMyReducer
  } from './reducers/orderReducers'
 
 // productList, productDetails, cart are gonna show as our states
@@ -27,6 +28,7 @@ const reducer = combineReducers({
     orderCreate: orderCreateReducer,
     orderDetails: orderDetailsReducer,
     orderPay: orderPayReducer,
+    orderListMy: orderListMyReducer,
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
