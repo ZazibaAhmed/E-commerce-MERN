@@ -165,6 +165,8 @@ const updateUser = asyncHandler(async (req, res) => {
         user.email = req.body.email || user.email
         user.isAdmin = req.body.isAdmin
 
+        //Cant Change User's Password
+
         const updatedUser = await user.save()
 
         res.json({
@@ -180,14 +182,14 @@ const updateUser = asyncHandler(async (req, res) => {
 })
   
 export {
-authUser,
-registerUser,
-getUserprofile,
-updateUserprofile,
-getUsers,
-deleteUser,
-getUserById,
-updateUser,
+    authUser,
+    registerUser,
+    getUserprofile,
+    updateUserprofile,
+    getUsers,
+    deleteUser,
+    getUserById,
+    updateUser,
 }
 
 

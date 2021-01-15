@@ -22,10 +22,11 @@ router
     .route('/profile')
     .get(protect, getUserprofile)
     .put(protect, updateUserprofile)
-router
-.route('/:id')
-.delete(protect, admin, deleteUser)
-.get(protect, admin, getUserById)
-.put(protect, admin, updateUser)
+ router
+    .route('/:id')
+    .delete(protect, admin, deleteUser)
+    .get(protect, admin, getUserById)
+    .put(protect, admin, updateUser)
+ 
 
 export default router;
