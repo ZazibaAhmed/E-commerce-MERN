@@ -18,12 +18,12 @@ const ProductListScreen = ({ history, match }) => {
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
 
-  //   const productDelete = useSelector((state) => state.productDelete);
-  //   const {
-  //     loading: loadingDelete,
-  //     error: errorDelete,
-  //     success: successDelete,
-  //   } = productDelete;
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
 
   //   const productCreate = useSelector((state) => state.productCreate);
   //   const {
@@ -43,11 +43,11 @@ const ProductListScreen = ({ history, match }) => {
       history.push("/login");
     }
     //passing successDelete because if that changes we want useEffect to run again
-  }, [dispatch, history, userInfo]);
+  }, [dispatch, history, userInfo, successDelete]);
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure")) {
-      //dispatch(deleteProduct(id))
+      dispatch(deleteProduct(id));
     }
   };
 
@@ -67,6 +67,10 @@ const ProductListScreen = ({ history, match }) => {
           </Button>
         </Col>
       </Row>
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+      {/* {loadingCreate && <Loader />}
+      {errorCreate && <Message variant='danger'>{errorCreate}</Message>} */}
       {loading ? (
         <Loader />
       ) : error ? (
