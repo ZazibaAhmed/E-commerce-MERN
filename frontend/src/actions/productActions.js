@@ -29,14 +29,14 @@ import { logout } from "./userActions";
 //Previously we were fetcing directly from components, now we make requests in actions
 
 //This is wehere Redux THUNK comes in. Allows us to add a function within a function
-export const listProducts = () => async (dispatch) => {
+export const listProducts = (keyword = "") => async (dispatch) => {
   try {
     //Will call the reducer in the reducer file
     //This calls the reducer which sets loeading to true
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
     //Make our request
-    const response = await axios.get("/api/products");
+    const response = await axios.get(`/api/products?keyword=${keyword}`);
 
     //^ If this fails it will fire off in the catch block
     // otherwise it will go down to dispatch

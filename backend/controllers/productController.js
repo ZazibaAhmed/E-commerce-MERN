@@ -5,7 +5,17 @@ import Product from "../models/productModel.js";
 // @route GET api/products
 // @access  Public
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  //if this exists
+  const keyword = req.query.keyword
+    ? {
+        name: {
+          $regex: req.query.keyword,
+          $options: "i", //i is case insensitive
+        },
+      }
+    : {};
+
+  const products = await Product.find({ ...keyword });
   // throw new Error("Some Error")
   res.json(products);
 });
