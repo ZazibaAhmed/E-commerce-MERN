@@ -6,23 +6,25 @@ import { Row, Col } from "react-bootstrap";
 import Product from "../components/Product";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Paginate from "../components/Paginate";
 
 const HomeScreen = ({ match }) => {
   // const [products, setProducts] = useState([]);  //OLD WAY
   const keyword = match.params.keyword;
 
+  const pageNumber = match.params.pageNumber || 1;
+
   const dispatch = useDispatch();
 
   // Name it, what you named it in store
   const productList = useSelector((state) => state.productList);
-
   //Destructuring parts of the state that could be sent down from reducer
-  const { loading, error, products } = productList;
+  const { loading, error, products, page, pages } = productList;
 
   // We make requests when the app has loaded
   useEffect(() => {
     //Calls listProducts and fills up our space
-    dispatch(listProducts(keyword));
+    dispatch(listProducts(keyword, pageNumber));
 
     //----------OLD WAY--------------
     // const fetchProducts = async () => {
@@ -30,7 +32,7 @@ const HomeScreen = ({ match }) => {
     //     setProducts(response.data)
     // }
     //fetchProducts();
-  }, [dispatch, keyword]); //passing dispatch as a dependency since we are using it, otherwise we'll get a warning
+  }, [dispatch, keyword, pageNumber]); //passing dispatch as a dependency since we are using it, otherwise we'll get a warning
 
   return (
     <>
@@ -40,13 +42,20 @@ const HomeScreen = ({ match }) => {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <Row>
-          {products.map((product) => (
-            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-              <Product product={product} />
-            </Col>
-          ))}
-        </Row>
+        <>
+          <Row>
+            {products.map((product) => (
+              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                <Product product={product} />
+              </Col>
+            ))}
+          </Row>
+          <Paginate
+            pages={pages}
+            page={page}
+            keyword={keyword ? keyword : ""}
+          />
+        </>
       )}
     </>
   );
